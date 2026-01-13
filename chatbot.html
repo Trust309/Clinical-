@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NWLVH Clinical Supervision Chatbot</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .chatbot-container {
+            width: 100%;
+            max-width: 800px;
+            height: 90vh;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        .chatbot-header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 25px;
+            text-align: center;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .chatbot-header h1 {
+            font-size: 24px;
+            margin-bottom: 5px;
+        }
+
+        .chatbot-header p {
+            font-size: 14px;
+            opacity: 0.9;
+        }
+
+        .chat-messages {
+            flex: 1;
+            padding: 20px;
+            overflow-y: auto;
+            background: #f5f5f5;
+        }
+
+        .message {
+            margin-bottom: 20px;
+            display: flex;
+            align-items: flex-start;
+            animation: fadeIn 0.3s ease-in;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .message.user {
+            flex-direction: row-reverse;
+        }
+
+        .message-content {
+            max-width: 70%;
+            padding: 15px;
+            border-radius: 15px;
+            position: relative;
+        }
+
+        .message.bot .message-content {
+            background: white;
+            color: #333;
+            border: 1px solid #e0e0e0;
+            margin-left: 10px;
+        }
+
+        .message.user .message-content {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            margin-right: 10px;
+        }
+
+        .message-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            flex-shrink: 0;
+        }
+
+        .message.bot .message-avatar {
+            background: #667eea;
+            color: white;
+        }
+
+        .message.user .message-avatar {
+            background: #764ba2;
+            color: white;
+        }
+
+        .chat-input-container {
+            padding: 20px;
+            background: white;
+            border-top: 1px solid #e0e0e0;
+            display: flex;
+            gap: 10px;
+        }
+
+        .chat-input {
+            flex: 1;
+            padding: 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 25px;
+            font-size: 14px;
+            outline: none;
+            transition: border-color 0.3s;
+        }
+
+        .chat-input:focus {
+            border-color: #667eea;
+        }
+
+        .send-button {
+            padding: 15px 30px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: bold;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .send-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        .send-button:active {
+            transform: translateY(0);
+        }
+
+        .send-button:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .typing-indicator {
+            display: none;
+            padding: 15px;
+            background: white;
+            border-radius: 15px;
+            margin-left: 50px;
+            margin-bottom: 20px;
+            border: 1px solid #e0e0e0;
+            width: fit-content;
+        }
+
+        .typing-indicator.active {
+            display: block;
+        }
+
+        .typing-indicator span {
+            height: 10px;
+            width: 10px;
+            background: #667eea;
+            border-radius: 50%;
+            display: inline-block;
+            margin: 0 2px;
+            animation: typing 1.4s infinite;
+        }
+
+        .typing-indicator span:nth-child(2) {
+            animation-delay: 0.2s;
+        }
+
+        .typing-indicator span:nth-child(3) {
+            animation-delay: 0.4s;
+        }
+
+        @keyframes typing {
+            0%, 60%, 100% {
+                transform: translateY(0);
+                opacity: 0.7;
+            }
+            30% {
+                transform: translateY(-10px);
+                opacity: 1;
+            }
+        }
+
+        .quick-actions {
+            padding: 15px 20px;
+            background: white;
+            border-top: 1px solid #e0e0e0;
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .quick-action-btn {
+            padding: 8px 15px;
+            background: #f0f0f0;
+            border: 1px solid #e0e0e0;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 12px;
+            transition: all 0.3s;
+        }
+
+        .quick-action-btn:hover {
+            background: #667eea;
+            color: white;
+            border-color: #667eea;
+        }
+    </style>
+</head>
+<body>
+    <div class="chatbot-container">
+        <div class="chatbot-header">
+            <h1>NWLVH Clinical Supervision Assistant</h1>
+            <p>Your guide for clinical supervision and professional development</p>
+        </div>
+
+        <div class="quick-actions" id="quickActions">
+            <button class="quick-action-btn" onclick="sendQuickMessage('What is clinical supervision?')">What is clinical supervision?</button>
+            <button class="quick-action-btn" onclick="sendQuickMessage('Best practices for supervision sessions')">Best practices</button>
+            <button class="quick-action-btn" onclick="sendQuickMessage('How to provide effective feedback')">Effective feedback</button>
+            <button class="quick-action-btn" onclick="sendQuickMessage('Ethical considerations in supervision')">Ethics</button>
+        </div>
+
+        <div class="chat-messages" id="chatMessages">
+            <div class="message bot">
+                <div class="message-avatar">CS</div>
+                <div class="message-content">
+                    Hello! I'm the NWLVH Clinical Supervision Assistant. I'm here to help you with questions about clinical supervision, best practices, ethical guidelines, and professional development. How can I assist you today?
+                </div>
+            </div>
+        </div>
+
+        <div class="typing-indicator" id="typingIndicator">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+
+        <div class="chat-input-container">
+            <input
+                type="text"
+                class="chat-input"
+                id="chatInput"
+                placeholder="Type your message here..."
+                onkeypress="handleKeyPress(event)"
+            >
+            <button class="send-button" id="sendButton" onclick="sendMessage()">Send</button>
+        </div>
+    </div>
+
+    <script>
+        const chatMessages = document.getElementById('chatMessages');
+        const chatInput = document.getElementById('chatInput');
+        const sendButton = document.getElementById('sendButton');
+        const typingIndicator = document.getElementById('typingIndicator');
+
+        const knowledgeBase = {
+            'clinical supervision': {
+                keywords: ['what is', 'define', 'clinical supervision', 'supervision', 'cs'],
+                response: "Clinical supervision is a formal process of professional support and learning that enables practitioners to develop knowledge and competence, assume responsibility for their own practice, and enhance patient protection and safety. It involves regular meetings between a supervisor and supervisee to reflect on practice, discuss cases, and support professional development."
+            },
+            'best practices': {
+                keywords: ['best practice', 'guidelines', 'effective', 'how to'],
+                response: "Best practices for clinical supervision include:\n\n1. Regular scheduled sessions (typically weekly or bi-weekly)\n2. Clear goals and expectations\n3. Confidential and safe environment\n4. Active listening and reflection\n5. Constructive feedback\n6. Documentation of sessions\n7. Focus on both clinical skills and personal development\n8. Adherence to ethical guidelines\n9. Cultural sensitivity and awareness\n10. Continuous evaluation of the supervision process"
+            },
+            'feedback': {
+                keywords: ['feedback', 'critique', 'evaluation', 'assessment'],
+                response: "Effective feedback in clinical supervision should be:\n\n- Specific and concrete (not vague)\n- Timely (given soon after observation)\n- Balanced (highlighting both strengths and areas for growth)\n- Actionable (providing clear steps for improvement)\n- Supportive (delivered with empathy and respect)\n- Focused on behavior, not personality\n- Two-way (encouraging dialogue and reflection)\n\nRemember: The goal is growth and development, not criticism."
+            },
+            'ethics': {
+                keywords: ['ethical', 'ethics', 'boundaries', 'confidentiality', 'dual relationship'],
+                response: "Key ethical considerations in clinical supervision include:\n\n1. Confidentiality (with clear limits)\n2. Maintaining professional boundaries\n3. Avoiding dual relationships\n4. Competence and scope of practice\n5. Informed consent\n6. Documentation and record-keeping\n7. Cultural competence and sensitivity\n8. Duty to warn and mandatory reporting\n9. Power dynamics awareness\n10. Regular ethical consultation and review\n\nAlways refer to your professional code of ethics and organizational policies."
+            },
+            'models': {
+                keywords: ['model', 'framework', 'approach', 'theory'],
+                response: "Common clinical supervision models include:\n\n1. **Developmental Models** - Focus on the supervisee's developmental stage\n2. **Process Models** - Emphasize the supervision relationship and process\n3. **Reflective Models** - Encourage critical reflection on practice\n4. **Competency-Based Models** - Focus on specific skills and competencies\n5. **Integrated Models** - Combine elements from multiple approaches\n\nThe choice of model depends on context, supervisee needs, and organizational requirements."
+            },
+            'challenges': {
+                keywords: ['challenge', 'difficult', 'problem', 'issue', 'struggle'],
+                response: "Common challenges in clinical supervision and solutions:\n\n- **Time constraints**: Schedule regular sessions and protect that time\n- **Resistance from supervisee**: Explore concerns openly and collaboratively\n- **Performance issues**: Address promptly with clear feedback and action plans\n- **Personality conflicts**: Focus on professional goals and seek consultation if needed\n- **Boundary violations**: Re-establish clear boundaries and expectations\n- **Cultural differences**: Engage in cultural humility and ongoing learning\n\nRemember: Seeking consultation or supervision of supervision is a sign of professional strength."
+            },
+            'documentation': {
+                keywords: ['document', 'record', 'notes', 'paperwork'],
+                response: "Documentation in clinical supervision should include:\n\n1. Date and duration of session\n2. Topics discussed\n3. Cases reviewed\n4. Goals set and progress made\n5. Feedback provided\n6. Action items and follow-up needed\n7. Any concerns or issues raised\n8. Supervisee's signature (when applicable)\n\nDocumentation serves legal, professional, and quality improvement purposes. Keep records secure and follow organizational policies."
+            },
+            'frequency': {
+                keywords: ['how often', 'frequency', 'schedule', 'regular'],
+                response: "Recommended supervision frequency varies by:\n\n- **New practitioners**: Weekly sessions (60-90 minutes)\n- **Developing practitioners**: Bi-weekly sessions (60 minutes)\n- **Experienced practitioners**: Monthly sessions or as needed\n- **Crisis situations**: More frequent as required\n\nConsistency is key. Regular, scheduled sessions are more effective than sporadic meetings. Adjust frequency based on supervisee needs, complexity of cases, and organizational requirements."
+            }
+        };
+
+        function handleKeyPress(event) {
+            if (event.key === 'Enter') {
+                sendMessage();
+            }
+        }
+
+        function sendQuickMessage(message) {
+            chatInput.value = message;
+            sendMessage();
+        }
+
+        function sendMessage() {
+            const message = chatInput.value.trim();
+            if (!message) return;
+
+            addMessage(message, 'user');
+            chatInput.value = '';
+            chatInput.disabled = true;
+            sendButton.disabled = true;
+
+            typingIndicator.classList.add('active');
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+
+            setTimeout(() => {
+                const response = generateResponse(message);
+                typingIndicator.classList.remove('active');
+                addMessage(response, 'bot');
+                chatInput.disabled = false;
+                sendButton.disabled = false;
+                chatInput.focus();
+            }, 1000 + Math.random() * 1000);
+        }
+
+        function addMessage(content, sender) {
+            const messageDiv = document.createElement('div');
+            messageDiv.className = `message ${sender}`;
+
+            const avatar = document.createElement('div');
+            avatar.className = 'message-avatar';
+            avatar.textContent = sender === 'bot' ? 'CS' : 'You';
+
+            const contentDiv = document.createElement('div');
+            contentDiv.className = 'message-content';
+            contentDiv.textContent = content;
+
+            messageDiv.appendChild(avatar);
+            messageDiv.appendChild(contentDiv);
+
+            chatMessages.appendChild(messageDiv);
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+        }
+
+        function generateResponse(userMessage) {
+            const messageLower = userMessage.toLowerCase();
+
+            for (const [key, data] of Object.entries(knowledgeBase)) {
+                for (const keyword of data.keywords) {
+                    if (messageLower.includes(keyword)) {
+                        return data.response;
+                    }
+                }
+            }
+
+            if (messageLower.includes('hello') || messageLower.includes('hi') || messageLower.includes('hey')) {
+                return "Hello! How can I help you with clinical supervision today?";
+            }
+
+            if (messageLower.includes('thank')) {
+                return "You're welcome! Feel free to ask if you have any other questions about clinical supervision.";
+            }
+
+            if (messageLower.includes('help')) {
+                return "I can help you with:\n- Clinical supervision concepts and definitions\n- Best practices and guidelines\n- Providing effective feedback\n- Ethical considerations\n- Supervision models and frameworks\n- Common challenges and solutions\n- Documentation requirements\n- Session frequency and structure\n\nWhat would you like to know more about?";
+            }
+
+            return "That's an interesting question. While I can provide general information about clinical supervision, best practices, ethics, feedback, and common challenges, I may need more context. Could you rephrase your question or ask about a specific aspect of clinical supervision? You can also use the quick action buttons above for common topics.";
+        }
+
+        chatInput.focus();
+    </script>
+</body>
+</html>
