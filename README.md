@@ -50,6 +50,8 @@ For a more robust deployment with API capabilities:
 
 ## API Endpoints (Flask Version)
 
+### Chatbot Endpoints
+
 - `POST /chat` - Send a message and receive a response
   ```json
   {
@@ -60,6 +62,48 @@ For a more robust deployment with API capabilities:
 - `GET /history` - Retrieve conversation history
 
 - `POST /reset` - Reset the conversation
+
+### Ward Data Endpoints
+
+- `GET /api/ward-data` - Retrieve all ward information
+  ```json
+  {
+    "wards": [...],
+    "last_updated": "2026-01-17T00:00:00"
+  }
+  ```
+
+- `GET /api/ward-data/<ward_id>` - Get specific ward by ID (e.g., `/api/ward-data/ward-001`)
+  ```json
+  {
+    "ward": {
+      "id": "ward-001",
+      "name": "Acute Medical Unit",
+      "department": "Medicine",
+      "capacity": 28,
+      "current_occupancy": 24,
+      "staff_on_duty": {...},
+      "specialties": [...],
+      "contact": {...}
+    },
+    "timestamp": "2026-01-17T00:00:00"
+  }
+  ```
+
+#### Example Usage
+
+```javascript
+// Fetch from your API
+const response = await fetch('/api/ward-data');
+const data = await response.json();
+
+// Display ward information
+data.wards.forEach(ward => {
+  console.log(`${ward.name}: ${ward.current_occupancy}/${ward.capacity}`);
+});
+```
+
+See `ward_data_example.html` for a complete interactive dashboard example.
 
 ## Usage Examples
 
