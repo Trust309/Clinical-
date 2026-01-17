@@ -2,6 +2,11 @@
 
 An intelligent chatbot assistant designed to provide guidance and support for clinical supervision practices. This tool helps supervisors and supervisees navigate the complexities of clinical supervision through an interactive, knowledge-based interface.
 
+## Documentation
+
+- **[NHS Network Access Guide](NHS_NETWORK_ACCESS.md)** - Comprehensive guide for accessing Imperial College Healthcare NHS Trust network resources
+- **[Developer Configuration Guide](DEVELOPER_GUIDE.md)** - Setup instructions for developers working on this project within NHS infrastructure
+
 ## Features
 
 - **Interactive Chat Interface**: Modern, user-friendly web interface with real-time responses
@@ -32,6 +37,8 @@ This version runs entirely in your browser with no server setup needed.
 ### Option 2: Flask Backend Version (Advanced)
 
 For a more robust deployment with API capabilities:
+
+**Note**: If you're deploying within NHS infrastructure or need NHS network access, please refer to the **[Developer Configuration Guide](DEVELOPER_GUIDE.md)** for detailed setup instructions including VPN, proxy configuration, and deployment procedures.
 
 1. **Install Python Dependencies**
    ```bash
