@@ -397,6 +397,118 @@ I'm here to help!"""
 # Initialize chatbot
 chatbot = ClinicalSupervisionChatbot()
 
+# Ward data - sample clinical ward information
+WARD_DATA = {
+    'wards': [
+        {
+            'id': 'ward-001',
+            'name': 'Acute Medical Unit',
+            'department': 'Medicine',
+            'capacity': 28,
+            'current_occupancy': 24,
+            'staff_on_duty': {
+                'nurses': 6,
+                'doctors': 2,
+                'support_staff': 3
+            },
+            'specialties': ['General Medicine', 'Respiratory', 'Cardiology'],
+            'contact': {
+                'phone': '01234 567890',
+                'extension': '2001'
+            }
+        },
+        {
+            'id': 'ward-002',
+            'name': 'Surgical Ward A',
+            'department': 'Surgery',
+            'capacity': 32,
+            'current_occupancy': 29,
+            'staff_on_duty': {
+                'nurses': 7,
+                'doctors': 3,
+                'support_staff': 4
+            },
+            'specialties': ['General Surgery', 'Orthopedics', 'Vascular'],
+            'contact': {
+                'phone': '01234 567891',
+                'extension': '2002'
+            }
+        },
+        {
+            'id': 'ward-003',
+            'name': 'Maternity Ward',
+            'department': 'Obstetrics',
+            'capacity': 20,
+            'current_occupancy': 16,
+            'staff_on_duty': {
+                'midwives': 5,
+                'nurses': 3,
+                'doctors': 2,
+                'support_staff': 2
+            },
+            'specialties': ['Maternity', 'Neonatal Care'],
+            'contact': {
+                'phone': '01234 567892',
+                'extension': '2003'
+            }
+        },
+        {
+            'id': 'ward-004',
+            'name': 'Pediatric Ward',
+            'department': 'Pediatrics',
+            'capacity': 24,
+            'current_occupancy': 18,
+            'staff_on_duty': {
+                'nurses': 6,
+                'doctors': 2,
+                'support_staff': 3,
+                'play_specialists': 2
+            },
+            'specialties': ['General Pediatrics', 'Pediatric Surgery'],
+            'contact': {
+                'phone': '01234 567893',
+                'extension': '2004'
+            }
+        },
+        {
+            'id': 'ward-005',
+            'name': 'Intensive Care Unit',
+            'department': 'Critical Care',
+            'capacity': 12,
+            'current_occupancy': 10,
+            'staff_on_duty': {
+                'nurses': 12,
+                'doctors': 4,
+                'support_staff': 2
+            },
+            'specialties': ['Intensive Care', 'High Dependency'],
+            'contact': {
+                'phone': '01234 567894',
+                'extension': '2005'
+            }
+        },
+        {
+            'id': 'ward-006',
+            'name': 'Mental Health Unit',
+            'department': 'Psychiatry',
+            'capacity': 18,
+            'current_occupancy': 14,
+            'staff_on_duty': {
+                'nurses': 5,
+                'psychiatrists': 2,
+                'psychologists': 1,
+                'support_staff': 3
+            },
+            'specialties': ['Acute Psychiatry', 'Crisis Intervention'],
+            'contact': {
+                'phone': '01234 567895',
+                'extension': '2006'
+            }
+        }
+    ],
+    'last_updated': datetime.now().isoformat()
+}
+
 @app.route('/')
 def home():
     """
@@ -413,6 +525,8 @@ def home():
             <li>POST /chat - Send a message to the chatbot</li>
             <li>GET /history - Get conversation history</li>
             <li>POST /reset - Reset conversation</li>
+            <li>GET /api/ward-data - Get all ward data</li>
+            <li>GET /api/ward-data/&lt;ward_id&gt; - Get specific ward by ID</li>
         </ul>
     </body>
     </html>
@@ -465,6 +579,50 @@ def reset():
     return jsonify({
         'message': 'Conversation reset successfully'
     })
+
+@app.route('/api/ward-data', methods=['GET'])
+def get_ward_data():
+    """
+    Get ward data information
+    Returns information about all clinical wards including capacity, staffing, and contact details
+    """
+    try:
+        # Update timestamp to current time
+        WARD_DATA['last_updated'] = datetime.now().isoformat()
+
+        return jsonify(WARD_DATA), 200
+
+    except Exception as e:
+        return jsonify({
+            'error': 'Failed to fetch ward data',
+            'details': str(e)
+        }), 500
+
+@app.route('/api/ward-data/<ward_id>', methods=['GET'])
+def get_ward_by_id(ward_id):
+    """
+    Get specific ward data by ID
+    """
+    try:
+        # Find ward by ID
+        ward = next((w for w in WARD_DATA['wards'] if w['id'] == ward_id), None)
+
+        if ward:
+            return jsonify({
+                'ward': ward,
+                'timestamp': datetime.now().isoformat()
+            }), 200
+        else:
+            return jsonify({
+                'error': 'Ward not found',
+                'ward_id': ward_id
+            }), 404
+
+    except Exception as e:
+        return jsonify({
+            'error': 'Failed to fetch ward data',
+            'details': str(e)
+        }), 500
 
 if __name__ == '__main__':
     print("Starting NWLVH Clinical Supervision Chatbot...")
