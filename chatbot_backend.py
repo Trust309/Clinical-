@@ -3,13 +3,15 @@ NWLVH Clinical Supervision Chatbot Backend
 A Flask-based chatbot server for clinical supervision assistance
 """
 
-from flask import Flask, request, jsonify, render_template
+import os
+
+from flask import Flask, request, jsonify
 from flask_cors import CORS
 from datetime import datetime
-import re
 
 app = Flask(__name__)
 CORS(app)
+
 
 class ClinicalSupervisionChatbot:
     """
@@ -21,7 +23,9 @@ class ClinicalSupervisionChatbot:
         self.knowledge_base = {
             'clinical_supervision': {
                 'keywords': ['what is', 'define', 'clinical supervision', 'supervision', 'cs', 'about'],
-                'response': """Clinical supervision is a formal process of professional support and learning that enables practitioners to develop knowledge and competence, assume responsibility for their own practice, and enhance patient protection and safety.
+                'response': """Clinical supervision is a formal process of professional support \
+and learning that enables practitioners to develop knowledge and competence, \
+assume responsibility for their own practice, and enhance patient protection and safety.
 
 Key components include:
 - Regular structured meetings between supervisor and supervisee
@@ -286,7 +290,8 @@ Remember: If it isn't documented, it didn't happen (legally speaking)."""
 - Learning goals
 
 **Key Principle:**
-Consistency is more important than duration. Regular, scheduled sessions are more effective than sporadic longer meetings.
+Consistency is more important than duration. Regular, scheduled sessions are \
+more effective than sporadic longer meetings.
 
 **Flexibility:**
 Be willing to adjust frequency based on changing needs, but maintain regular contact even with experienced staff."""
@@ -342,12 +347,15 @@ Consider combining group supervision with periodic individual sessions for compr
         message_lower = user_message.lower()
 
         # Check greetings
-        if any(greeting in message_lower for greeting in ['hello', 'hi', 'hey', 'good morning', 'good afternoon']):
-            return "Hello! I'm the NWLVH Clinical Supervision Assistant. How can I help you with clinical supervision today?"
+        greetings = ['hello', 'hi', 'hey', 'good morning', 'good afternoon']
+        if any(greeting in message_lower for greeting in greetings):
+            return ("Hello! I'm the NWLVH Clinical Supervision Assistant. "
+                    "How can I help you with clinical supervision today?")
 
         # Check thanks
         if any(thanks in message_lower for thanks in ['thank', 'thanks', 'appreciate']):
-            return "You're very welcome! I'm here anytime you have questions about clinical supervision. Feel free to ask anything else!"
+            return ("You're very welcome! I'm here anytime you have questions "
+                    "about clinical supervision. Feel free to ask anything else!")
 
         # Check help request
         if 'help' in message_lower and len(message_lower.split()) < 5:
@@ -372,7 +380,8 @@ What would you like to know more about?"""
                     return data['response']
 
         # Default response
-        return """That's an interesting question. While I specialize in clinical supervision topics, I may need more context to provide the most helpful response.
+        return """That's an interesting question. While I specialize in clinical \
+supervision topics, I may need more context to provide the most helpful response.
 
 Could you rephrase your question or ask about a specific aspect such as:
 - Supervision best practices
@@ -394,8 +403,10 @@ I'm here to help!"""
             'timestamp': datetime.now().isoformat()
         })
 
+
 # Initialize chatbot
 chatbot = ClinicalSupervisionChatbot()
+
 
 @app.route('/')
 def home():
@@ -417,6 +428,7 @@ def home():
     </body>
     </html>
     """
+
 
 @app.route('/chat', methods=['POST'])
 def chat():
@@ -447,6 +459,7 @@ def chat():
     except Exception as e:
         return jsonify({'error': str(e)}), 500
 
+
 @app.route('/history', methods=['GET'])
 def get_history():
     """
@@ -455,6 +468,7 @@ def get_history():
     return jsonify({
         'history': chatbot.conversation_history
     })
+
 
 @app.route('/reset', methods=['POST'])
 def reset():
@@ -466,7 +480,18 @@ def reset():
         'message': 'Conversation reset successfully'
     })
 
+
+@app.route('/health', methods=['GET'])
+def health():
+    """
+    Health check endpoint
+    """
+    return jsonify({'status': 'healthy'})
+
+
 if __name__ == '__main__':
+    debug = os.environ.get('FLASK_DEBUG', 'false').lower() == 'true'
+    port = int(os.environ.get('PORT', 5000))
     print("Starting NWLVH Clinical Supervision Chatbot...")
-    print("Access the API at http://localhost:5000")
-    app.run(debug=True, host='0.0.0.0', port=5000)
+    print(f"Access the API at http://localhost:{port}")
+    app.run(debug=debug, host='0.0.0.0', port=port)
