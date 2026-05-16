@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SportsPulse — Live Sports Updates</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@0,400;0,600;0,700;0,900;1,700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+
+  <!-- TOP BAR -->
+  <div class="top-bar">
+    <div class="container top-bar__inner">
+      <span class="top-bar__date" id="currentDate"></span>
+      <div class="top-bar__links">
+        <a href="#">Sign In</a>
+        <a href="#newsletter" class="btn-subscribe">Subscribe</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- HEADER -->
+  <header class="header">
+    <div class="container header__inner">
+      <a href="#" class="logo">
+        <span class="logo__icon">&#9889;</span>
+        <span class="logo__text">Sport<span class="logo__accent">Pulse</span></span>
+      </a>
+      <nav class="nav">
+        <a href="#" class="nav__link active">Home</a>
+        <a href="#scores" class="nav__link">Scores</a>
+        <a href="#football" class="nav__link">Football</a>
+        <a href="#basketball" class="nav__link">Basketball</a>
+        <a href="#tennis" class="nav__link">Tennis</a>
+        <a href="#athletics" class="nav__link">Athletics</a>
+        <a href="#videos" class="nav__link">Videos</a>
+      </nav>
+      <button class="hamburger" id="hamburger" aria-label="Menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </header>
+
+  <!-- LIVE SCORES TICKER -->
+  <section class="ticker" id="scores">
+    <div class="ticker__label"><span>&#128308;</span> LIVE</div>
+    <div class="ticker__track">
+      <div class="ticker__content" id="tickerContent"></div>
+    </div>
+  </section>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero__bg"></div>
+    <div class="container hero__inner">
+      <div class="hero__main">
+        <span class="badge badge--red">BREAKING</span>
+        <h1 class="hero__title">Mbappe Scores Hat-Trick as Real Madrid Clinch Champions League Title in Thrilling Final</h1>
+        <p class="hero__meta"><span class="hero__category">Football</span> &bull; 12 minutes ago &bull; Santiago Bernabéu</p>
+        <p class="hero__desc">In a breathtaking 90 minutes that had fans on the edge of their seats, Real Madrid secured their 16th Champions League trophy with a stunning 4-2 victory over Manchester City.</p>
+        <a href="#" class="btn btn--primary">Read Full Story &rarr;</a>
+      </div>
+      <div class="hero__sidebar">
+        <h3 class="sidebar__heading">TOP STORIES</h3>
+        <div class="sidebar__items" id="topStories"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SPORT CATEGORIES NAV -->
+  <section class="categories">
+    <div class="container categories__inner">
+      <button class="cat-btn active" data-filter="all">All</button>
+      <button class="cat-btn" data-filter="football">&#9917; Football</button>
+      <button class="cat-btn" data-filter="basketball">&#127936; Basketball</button>
+      <button class="cat-btn" data-filter="tennis">&#127934; Tennis</button>
+      <button class="cat-btn" data-filter="athletics">&#127939; Athletics</button>
+      <button class="cat-btn" data-filter="cricket">&#127992; Cricket</button>
+      <button class="cat-btn" data-filter="rugby">&#127944; Rugby</button>
+    </div>
+  </section>
+
+  <!-- NEWS GRID -->
+  <section class="news section" id="football">
+    <div class="container">
+      <div class="section__header">
+        <h2 class="section__title">Latest <span class="accent">News</span></h2>
+        <a href="#" class="see-all">See All &rarr;</a>
+      </div>
+      <div class="news__grid" id="newsGrid"></div>
+    </div>
+  </section>
+
+  <!-- LIVE SCORES TABLE -->
+  <section class="scores-section section" id="basketball">
+    <div class="container">
+      <div class="section__header">
+        <h2 class="section__title">Live <span class="accent">Scores</span></h2>
+        <span class="live-dot"><span class="dot-pulse"></span> Live Updates</span>
+      </div>
+      <div class="scores-grid" id="scoresGrid"></div>
+    </div>
+  </section>
+
+  <!-- VIDEO HIGHLIGHTS -->
+  <section class="videos section" id="videos">
+    <div class="container">
+      <div class="section__header">
+        <h2 class="section__title">Video <span class="accent">Highlights</span></h2>
+        <a href="#" class="see-all">See All &rarr;</a>
+      </div>
+      <div class="videos__grid" id="videosGrid"></div>
+    </div>
+  </section>
+
+  <!-- STATS BANNER -->
+  <section class="stats-banner">
+    <div class="container stats-banner__inner">
+      <div class="stat">
+        <span class="stat__number" data-target="48">0</span>
+        <span class="stat__label">Live Matches</span>
+      </div>
+      <div class="stat">
+        <span class="stat__number" data-target="1240">0</span>
+        <span class="stat__label">Stories Today</span>
+      </div>
+      <div class="stat">
+        <span class="stat__number" data-target="95">0</span>
+        <span class="stat__label">Sports Covered</span>
+      </div>
+      <div class="stat">
+        <span class="stat__number" data-target="3200000">0</span>
+        <span class="stat__label">Monthly Readers</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- NEWSLETTER -->
+  <section class="newsletter section" id="newsletter">
+    <div class="container newsletter__inner">
+      <div class="newsletter__text">
+        <h2>Never Miss a <span class="accent">Match</span></h2>
+        <p>Get breaking sports news, live scores, and exclusive highlights delivered straight to your inbox.</p>
+      </div>
+      <form class="newsletter__form" id="newsletterForm">
+        <input type="email" placeholder="Enter your email address" required />
+        <button type="submit" class="btn btn--primary">Subscribe Free</button>
+      </form>
+      <p class="newsletter__note" id="newsletterMsg"></p>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="container footer__inner">
+      <div class="footer__brand">
+        <a href="#" class="logo">
+          <span class="logo__icon">&#9889;</span>
+          <span class="logo__text">Sport<span class="logo__accent">Pulse</span></span>
+        </a>
+        <p>Your go-to destination for live sports updates, breaking news, and in-depth analysis from around the world.</p>
+        <div class="social-links">
+          <a href="#" aria-label="Twitter">𝕏</a>
+          <a href="#" aria-label="Facebook">f</a>
+          <a href="#" aria-label="Instagram">&#9679;</a>
+          <a href="#" aria-label="YouTube">&#9654;</a>
+        </div>
+      </div>
+      <div class="footer__links">
+        <div class="footer__col">
+          <h4>Sports</h4>
+          <a href="#">Football</a>
+          <a href="#">Basketball</a>
+          <a href="#">Tennis</a>
+          <a href="#">Athletics</a>
+          <a href="#">Cricket</a>
+        </div>
+        <div class="footer__col">
+          <h4>Company</h4>
+          <a href="#">About Us</a>
+          <a href="#">Careers</a>
+          <a href="#">Advertise</a>
+          <a href="#">Contact</a>
+        </div>
+        <div class="footer__col">
+          <h4>Legal</h4>
+          <a href="#">Privacy Policy</a>
+          <a href="#">Terms of Use</a>
+          <a href="#">Cookie Policy</a>
+        </div>
+      </div>
+    </div>
+    <div class="footer__bottom">
+      <div class="container">
+        <p>&copy; 2026 SportsPulse. All rights reserved. Designed with Canva-inspired aesthetics.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>
