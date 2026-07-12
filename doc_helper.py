@@ -305,7 +305,7 @@ class DocumentationHelper:
             if '@app.route' in line:
                 # Extract route details
                 path_match = re.search(r'@app\.route\([\'"]([^\'"]+)[\'"]', line)
-                method_match = re.search(r'methods=\[[\'"]([^\'"]+)[\'"\]', line)
+                method_match = re.search(r'methods=\[[\'"]([^\'"]+)[\'"]\]', line)
 
                 if path_match:
                     endpoint = {
