@@ -1,0 +1,124 @@
+{
+  "categories": {
+    "motivation": [
+      { "quote": "The future depends on what you do today.", "author": "Mahatma Gandhi" },
+      { "quote": "Don't watch the clock; do what it does. Keep going.", "author": "Sam Levenson" },
+      { "quote": "Success is not final, failure is not fatal: it is the courage to continue that counts.", "author": "Winston Churchill" },
+      { "quote": "The only way to do great work is to love what you do.", "author": "Steve Jobs" },
+      { "quote": "It always seems impossible until it's done.", "author": "Nelson Mandela" },
+      { "quote": "Believe you can and you're halfway there.", "author": "Theodore Roosevelt" },
+      { "quote": "Act as if what you do makes a difference. It does.", "author": "William James" },
+      { "quote": "Start where you are. Use what you have. Do what you can.", "author": "Arthur Ashe" },
+      { "quote": "Your limitation—it's only your imagination.", "author": "Unknown" },
+      { "quote": "Push yourself, because no one else is going to do it for you.", "author": "Unknown" }
+    ],
+    "success": [
+      { "quote": "Success usually comes to those who are too busy to be looking for it.", "author": "Henry David Thoreau" },
+      { "quote": "The road to success and the road to failure are almost exactly the same.", "author": "Colin R. Davis" },
+      { "quote": "I find that the harder I work, the more luck I seem to have.", "author": "Thomas Jefferson" },
+      { "quote": "Success is walking from failure to failure with no loss of enthusiasm.", "author": "Winston Churchill" },
+      { "quote": "Opportunities don't happen. You create them.", "author": "Chris Grosser" },
+      { "quote": "The way to get started is to quit talking and begin doing.", "author": "Walt Disney" },
+      { "quote": "Don't be afraid to give up the good to go for the great.", "author": "John D. Rockefeller" },
+      { "quote": "Success is not in what you have, but who you are.", "author": "Bo Bennett" },
+      { "quote": "There are no shortcuts to any place worth going.", "author": "Beverly Sills" },
+      { "quote": "Success is the sum of small efforts repeated day in and day out.", "author": "Robert Collier" }
+    ],
+    "discipline": [
+      { "quote": "Discipline is the bridge between goals and accomplishment.", "author": "Jim Rohn" },
+      { "quote": "We are what we repeatedly do. Excellence is not an act, but a habit.", "author": "Will Durant" },
+      { "quote": "Motivation gets you going, but discipline keeps you growing.", "author": "John C. Maxwell" },
+      { "quote": "Without discipline, there's no life at all.", "author": "Katharine Hepburn" },
+      { "quote": "The pain of discipline weighs ounces, the pain of regret weighs tons.", "author": "Jim Rohn" },
+      { "quote": "Discipline is choosing between what you want now and what you want most.", "author": "Abraham Lincoln" },
+      { "quote": "It's not that I'm so smart, it's just that I stay with problems longer.", "author": "Albert Einstein" },
+      { "quote": "Small disciplines repeated with consistency lead to great achievements.", "author": "John C. Maxwell" },
+      { "quote": "You don't have to be great to start, but you have to start to be great.", "author": "Zig Ziglar" },
+      { "quote": "Do something today that your future self will thank you for.", "author": "Unknown" }
+    ],
+    "mindset": [
+      { "quote": "Whether you think you can or you think you can't, you're right.", "author": "Henry Ford" },
+      { "quote": "The mind is everything. What you think you become.", "author": "Buddha" },
+      { "quote": "A person's mind, once stretched by a new idea, never regains its original dimensions.", "author": "Oliver Wendell Holmes" },
+      { "quote": "Change your thoughts and you change your world.", "author": "Norman Vincent Peale" },
+      { "quote": "Your attitude, not your aptitude, will determine your altitude.", "author": "Zig Ziglar" },
+      { "quote": "Whatever the mind can conceive and believe, it can achieve.", "author": "Napoleon Hill" },
+      { "quote": "The only limit to our realization of tomorrow is our doubts of today.", "author": "Franklin D. Roosevelt" },
+      { "quote": "Turn your wounds into wisdom.", "author": "Oprah Winfrey" },
+      { "quote": "You are never too old to set another goal or dream a new dream.", "author": "C.S. Lewis" },
+      { "quote": "Perspective is everything. Change how you see it, change what you see.", "author": "Unknown" }
+    ],
+    "resilience": [
+      { "quote": "In the middle of every difficulty lies opportunity.", "author": "Albert Einstein" },
+      { "quote": "Fall seven times, stand up eight.", "author": "Japanese Proverb" },
+      { "quote": "Rock bottom became the solid foundation on which I rebuilt my life.", "author": "J.K. Rowling" },
+      { "quote": "The bamboo that bends is stronger than the oak that resists.", "author": "Japanese Proverb" },
+      { "quote": "Out of difficulties grow miracles.", "author": "Jean de La Bruyère" },
+      { "quote": "Tough times never last, but tough people do.", "author": "Robert H. Schuller" },
+      { "quote": "You may have to fight a battle more than once to win it.", "author": "Margaret Thatcher" },
+      { "quote": "What doesn't kill you makes you stronger.", "author": "Friedrich Nietzsche" },
+      { "quote": "The comeback is always stronger than the setback.", "author": "Unknown" },
+      { "quote": "Storms make trees take deeper roots.", "author": "Dolly Parton" }
+    ],
+    "growth": [
+      { "quote": "Not all who wander are lost.", "author": "J.R.R. Tolkien" },
+      { "quote": "Growth is painful. Change is painful. But nothing is as painful as staying stuck.", "author": "Mandy Hale" },
+      { "quote": "The only way to grow is to step outside your comfort zone.", "author": "Unknown" },
+      { "quote": "Progress, not perfection, is the goal.", "author": "Unknown" },
+      { "quote": "Every day is a chance to become a better version of yourself.", "author": "Unknown" },
+      { "quote": "You are allowed to be both a masterpiece and a work in progress.", "author": "Sophia Bush" },
+      { "quote": "Growth begins at the end of your comfort zone.", "author": "Unknown" },
+      { "quote": "Be not afraid of growing slowly, be afraid only of standing still.", "author": "Chinese Proverb" },
+      { "quote": "Yesterday I was clever, so I wanted to change the world. Today I am wise, so I am changing myself.", "author": "Rumi" },
+      { "quote": "The best view comes after the hardest climb.", "author": "Unknown" }
+    ],
+    "focus": [
+      { "quote": "Concentrate all your thoughts upon the work at hand.", "author": "Alexander Graham Bell" },
+      { "quote": "Where focus goes, energy flows.", "author": "Tony Robbins" },
+      { "quote": "Lack of direction, not lack of time, is the problem.", "author": "Zig Ziglar" },
+      { "quote": "One reason so few of us achieve what we truly want is that we never direct our focus.", "author": "Tony Robbins" },
+      { "quote": "It is during our darkest moments that we must focus to see the light.", "author": "Aristotle Onassis" },
+      { "quote": "Focus on the step in front of you, not the whole staircase.", "author": "Unknown" },
+      { "quote": "You can do anything, but not everything.", "author": "David Allen" },
+      { "quote": "Simplicity boils down to two steps: identify the essential, eliminate the rest.", "author": "Leo Babauta" },
+      { "quote": "Starve your distractions, feed your focus.", "author": "Unknown" },
+      { "quote": "The successful warrior is the average person with laser-like focus.", "author": "Bruce Lee" }
+    ],
+    "self-belief": [
+      { "quote": "You yourself, as much as anybody in the entire universe, deserve your love and affection.", "author": "Buddha" },
+      { "quote": "To be yourself in a world that is constantly trying to make you something else is the greatest accomplishment.", "author": "Ralph Waldo Emerson" },
+      { "quote": "Trust yourself. You know more than you think you do.", "author": "Benjamin Spock" },
+      { "quote": "Nobody can make you feel inferior without your consent.", "author": "Eleanor Roosevelt" },
+      { "quote": "You are enough just as you are.", "author": "Meghan Markle" },
+      { "quote": "Doubt kills more dreams than failure ever will.", "author": "Suzy Kassem" },
+      { "quote": "Believe in yourself and all that you are.", "author": "Christian D. Larson" },
+      { "quote": "Confidence comes not from always being right but from not fearing to be wrong.", "author": "Peter T. Mcintyre" },
+      { "quote": "You are your only limit.", "author": "Unknown" },
+      { "quote": "The privilege of a lifetime is to become who you truly are.", "author": "Carl Jung" }
+    ],
+    "hustle": [
+      { "quote": "Dream big. Start small. Act now.", "author": "Robin Sharma" },
+      { "quote": "Great things never came from comfort zones.", "author": "Unknown" },
+      { "quote": "The dream is free, the hustle is sold separately.", "author": "Unknown" },
+      { "quote": "While you're sleeping on it, someone else is working hard to take it.", "author": "Unknown" },
+      { "quote": "Work hard in silence, let your success be your noise.", "author": "Frank Ocean" },
+      { "quote": "Don't stop when you're tired. Stop when you're done.", "author": "Unknown" },
+      { "quote": "Sweat now, shine later.", "author": "Unknown" },
+      { "quote": "Wake up with determination, go to bed with satisfaction.", "author": "Unknown" },
+      { "quote": "Little things make big days.", "author": "Unknown" },
+      { "quote": "Dreams don't work unless you do.", "author": "John C. Maxwell" }
+    ],
+    "gratitude": [
+      { "quote": "Gratitude turns what we have into enough.", "author": "Aesop" },
+      { "quote": "Enjoy the little things, for one day you may look back and realize they were the big things.", "author": "Robert Brault" },
+      { "quote": "Gratitude is not only the greatest of virtues, but the parent of all others.", "author": "Cicero" },
+      { "quote": "Be thankful for what you have; you'll end up having more.", "author": "Oprah Winfrey" },
+      { "quote": "Today, give a stranger one of your smiles. It might be the only sunshine they see all day.", "author": "H. Jackson Brown Jr." },
+      { "quote": "When you arise in the morning, think of what a precious privilege it is to be alive.", "author": "Marcus Aurelius" },
+      { "quote": "Gratitude changes everything.", "author": "Unknown" },
+      { "quote": "The more grateful I am, the more beauty I see.", "author": "Mary Davis" },
+      { "quote": "Appreciation is a wonderful thing. It makes what is excellent in others belong to us.", "author": "Voltaire" },
+      { "quote": "Count your blessings, not your problems.", "author": "Unknown" }
+    ]
+  }
+}

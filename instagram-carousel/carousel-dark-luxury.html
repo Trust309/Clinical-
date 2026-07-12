@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<title>Dark Luxury Motivational Quote Carousel</title>
+<meta name="hz:slide-selector" content=".slide" />
+<meta name="hz:canvas-width" content="1080" />
+<meta name="hz:canvas-height" content="1350" />
+<link rel="stylesheet" href="https://use.typekit.net/xgy2lxz.css">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 24px;
+    background: #3a3a3d;
+    padding: 24px;
+  }
+
+  .slide {
+    position: relative;
+    width: 1080px;
+    height: 1350px;
+    background: radial-gradient(circle at 82% 12%, rgba(212,175,55,0.22) 0%, rgba(212,175,55,0) 42%),
+                linear-gradient(160deg, #111013 0%, #17151a 55%, #0c0b0d 100%);
+    overflow: hidden;
+    font-family: "source-sans-3", sans-serif;
+  }
+
+  .quote-mark {
+    position: absolute;
+    top: 90px;
+    left: 90px;
+    font-family: "source-serif-4", serif;
+    font-size: 220px;
+    font-weight: 700;
+    color: rgba(212,175,55,0.16);
+    line-height: 1;
+  }
+
+  .dots {
+    position: absolute;
+    top: 64px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 12px;
+  }
+  .dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.22);
+  }
+  .dot.active { background: #d4af37; width: 22px; border-radius: 5px; }
+
+  .badge {
+    position: absolute;
+    top: 110px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-family: "source-sans-3", sans-serif;
+    font-size: 22px;
+    font-weight: 600;
+    letter-spacing: 6px;
+    color: #d4af37;
+    border: 1px solid rgba(212,175,55,0.55);
+    padding: 12px 28px;
+    border-radius: 30px;
+  }
+
+  .quote-body {
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 0 110px;
+    text-align: center;
+  }
+
+  .quote-text {
+    font-family: "source-serif-4", serif;
+    font-weight: 600;
+    font-style: italic;
+    color: #f6f2e8;
+    line-height: 1.32;
+  }
+  .qt-1 { font-size: 90px; }
+  .qt-2 { font-size: 76px; }
+  .qt-3 { font-size: 68px; }
+
+  .rule {
+    width: 70px;
+    height: 2px;
+    background: #d4af37;
+    margin: 46px 0 34px 0;
+  }
+
+  .author {
+    font-family: "source-sans-3", sans-serif;
+    font-size: 26px;
+    font-weight: 600;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: #d4af37;
+  }
+
+  .headline {
+    font-family: "source-serif-4", serif;
+    font-weight: 700;
+    font-size: 82px;
+    line-height: 1.22;
+    color: #f6f2e8;
+    text-align: center;
+  }
+
+  .subline {
+    margin-top: 40px;
+    font-family: "source-sans-3", sans-serif;
+    font-size: 30px;
+    color: rgba(246,242,232,0.72);
+    letter-spacing: 1px;
+  }
+
+  .footer {
+    position: absolute;
+    bottom: 64px;
+    left: 90px;
+    right: 90px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .handle {
+    font-family: "source-sans-3", sans-serif;
+    font-size: 24px;
+    font-weight: 600;
+    color: rgba(246,242,232,0.55);
+    letter-spacing: 1px;
+  }
+  .counter {
+    font-family: "source-sans-3", sans-serif;
+    font-size: 22px;
+    color: rgba(246,242,232,0.4);
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+  .arrow {
+    width: 26px;
+    height: 26px;
+  }
+
+  .cta-list {
+    margin-top: 56px;
+    display: flex;
+    flex-direction: column;
+    gap: 26px;
+    align-items: flex-start;
+  }
+  .cta-item {
+    font-family: "source-sans-3", sans-serif;
+    font-size: 32px;
+    color: #f6f2e8;
+    display: flex;
+    align-items: center;
+    gap: 18px;
+  }
+  .cta-icon { font-size: 34px; }
+
+  .follow-btn {
+    margin-top: 64px;
+    border: 2px solid #d4af37;
+    border-radius: 50px;
+    padding: 26px 58px;
+    font-family: "source-sans-3", sans-serif;
+    font-size: 32px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    color: #d4af37;
+  }
+</style>
+</head>
+<body>
+
+  <!-- SLIDE 1: COVER -->
+  <div class="slide" data-canvas-width="1080" data-canvas-height="1350">
+    <div class="dots">
+      <div class="dot active"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div>
+    </div>
+    <div class="badge">MOTIVATION</div>
+    <div class="quote-body">
+      <div class="headline">3 Truths<br/>Successful People<br/>Live By</div>
+      <div class="subline">Swipe for daily wisdom &nbsp;→</div>
+    </div>
+    <div class="footer">
+      <div class="handle">@daily.motivation</div>
+      <div class="counter">
+        1 / 5
+        <svg class="arrow" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M9 6L15 12L9 18" stroke="#d4af37" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE 2: QUOTE 1 -->
+  <div class="slide" data-canvas-width="1080" data-canvas-height="1350">
+    <div class="dots">
+      <div class="dot"></div><div class="dot active"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div>
+    </div>
+    <div class="quote-mark">"</div>
+    <div class="quote-body">
+      <div class="quote-text qt-1">The future depends on what you do today.</div>
+      <div class="rule"></div>
+      <div class="author">— Mahatma Gandhi</div>
+    </div>
+    <div class="footer">
+      <div class="handle">@daily.motivation</div>
+      <div class="counter">
+        2 / 5
+        <svg class="arrow" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M9 6L15 12L9 18" stroke="#d4af37" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE 3: QUOTE 2 -->
+  <div class="slide" data-canvas-width="1080" data-canvas-height="1350">
+    <div class="dots">
+      <div class="dot"></div><div class="dot"></div><div class="dot active"></div><div class="dot"></div><div class="dot"></div>
+    </div>
+    <div class="quote-mark">"</div>
+    <div class="quote-body">
+      <div class="quote-text qt-2">It always seems impossible until it's done.</div>
+      <div class="rule"></div>
+      <div class="author">— Nelson Mandela</div>
+    </div>
+    <div class="footer">
+      <div class="handle">@daily.motivation</div>
+      <div class="counter">
+        3 / 5
+        <svg class="arrow" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M9 6L15 12L9 18" stroke="#d4af37" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE 4: QUOTE 3 -->
+  <div class="slide" data-canvas-width="1080" data-canvas-height="1350">
+    <div class="dots">
+      <div class="dot"></div><div class="dot"></div><div class="dot"></div><div class="dot active"></div><div class="dot"></div>
+    </div>
+    <div class="quote-mark">"</div>
+    <div class="quote-body">
+      <div class="quote-text qt-1">Believe you can and you're halfway there.</div>
+      <div class="rule"></div>
+      <div class="author">— Theodore Roosevelt</div>
+    </div>
+    <div class="footer">
+      <div class="handle">@daily.motivation</div>
+      <div class="counter">
+        4 / 5
+        <svg class="arrow" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M9 6L15 12L9 18" stroke="#d4af37" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE 5: CTA -->
+  <div class="slide" data-canvas-width="1080" data-canvas-height="1350">
+    <div class="dots">
+      <div class="dot"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div><div class="dot active"></div>
+    </div>
+    <div class="quote-body">
+      <div class="headline" style="font-size:66px;">Which one hit<br/>home for you?</div>
+      <div class="cta-list">
+        <div class="cta-item"><span class="cta-icon">❤️</span> Like if this resonated</div>
+        <div class="cta-item"><span class="cta-icon">💾</span> Save it for a hard day</div>
+        <div class="cta-item"><span class="cta-icon">➡️</span> Share with someone who needs it</div>
+      </div>
+      <div class="follow-btn">FOLLOW @DAILY.MOTIVATION</div>
+    </div>
+    <div class="footer">
+      <div class="handle">New quotes every day</div>
+      <div class="counter">5 / 5</div>
+    </div>
+  </div>
+
+</body>
+</html>
