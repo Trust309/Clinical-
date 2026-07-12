@@ -48,6 +48,37 @@ For a more robust deployment with API capabilities:
    - Use the HTML interface to interact with the backend
    - Or integrate with your own frontend using the API endpoints
 
+## 📚 Documentation
+
+Comprehensive documentation is available in the `docs/` folder:
+
+- **[Quick Start Guide](docs/QUICK_START.md)** - Get started with documentation in 5 minutes
+- **[Documentation Workflow](docs/DOCUMENTATION_WORKFLOW.md)** - Complete guide to maintaining docs
+- **[API Documentation](docs/API.md)** - Detailed API reference (auto-generated)
+- **[Troubleshooting](docs/TROUBLESHOOTING.md)** - Common issues and solutions
+- **[Changelog](docs/CHANGELOG.md)** - Version history and changes
+- **[Cheat Sheet](docs/CHEATSHEET.md)** - Quick reference for common tasks
+
+### Documentation Helper Tool
+
+We provide an automated documentation helper:
+
+```bash
+# Validate documentation is consistent
+python doc_helper.py validate
+
+# Check what's documented
+python doc_helper.py check-coverage
+
+# Add new knowledge topic
+python doc_helper.py add-topic "Topic Name"
+
+# Generate API documentation
+python doc_helper.py generate-api
+```
+
+For more details, see [docs/README.md](docs/README.md).
+
 ## API Endpoints (Flask Version)
 
 - `POST /chat` - Send a message and receive a response
@@ -124,9 +155,13 @@ For a more robust deployment with API capabilities:
 The chatbot can be easily customized to fit your organization's needs:
 
 1. **Update Knowledge Base**: Edit the `knowledge_base` in `chatbot_backend.py` or the JavaScript in `chatbot.html`
+   - Use `python doc_helper.py add-topic "Topic Name"` to generate a template
+   - See [Knowledge Base Guide](docs/guides/knowledge_base_guide.md) for details
 2. **Modify Branding**: Update headers, colors, and styling in the HTML/CSS
 3. **Add New Topics**: Extend the knowledge base with organization-specific policies
 4. **Integrate with Systems**: Use the Flask API to connect with existing platforms
+
+For detailed customization guides, see the [documentation](docs/).
 
 ## Technical Details
 
@@ -146,11 +181,17 @@ The chatbot can be easily customized to fit your organization's needs:
 
 To enhance the chatbot:
 
-1. Add new topics to the knowledge base
-2. Improve response accuracy
-3. Enhance UI/UX design
-4. Add multilingual support
-5. Integrate with AI/ML models for advanced responses
+1. **Add new topics** to the knowledge base - Use `python doc_helper.py add-topic "Name"`
+2. **Improve response accuracy** - Follow the [Knowledge Base Guide](docs/guides/knowledge_base_guide.md)
+3. **Enhance UI/UX design** - Document changes using [Feature Template](docs/templates/feature_template.md)
+4. **Add multilingual support**
+5. **Integrate with AI/ML models** for advanced responses
+
+Before contributing:
+- Read the [Documentation Workflow](docs/DOCUMENTATION_WORKFLOW.md)
+- Use the provided templates in `docs/templates/`
+- Run `python doc_helper.py validate` before committing
+- Update the [Changelog](docs/CHANGELOG.md)
 
 ## Support
 
