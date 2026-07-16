@@ -166,4 +166,93 @@ Developed for NWLVH (Clinical Supervision) to support excellence in clinical sup
 
 ---
 
-**Note**: This chatbot provides general guidance on clinical supervision. Always refer to your organization's specific policies, professional code of ethics, and regulatory requirements for your jurisdiction 
+**Note**: This chatbot provides general guidance on clinical supervision. Always refer to your organization's specific policies, professional code of ethics, and regulatory requirements for your jurisdiction
+
+---
+
+# NWLVH New Starter Progress Tracker
+
+A tool for monitoring the onboarding progress of new starters at NWLVH, from pre-employment checks through to the end of probation. It tracks each new starter against a structured checklist and flags anyone falling behind.
+
+## Features
+
+- **Per-starter onboarding checklist** covering:
+  - Pre-employment checks (DBS, references, occupational health, right to work, registration)
+  - IT & systems access
+  - Day 1 induction
+  - Mandatory training
+  - Local induction & orientation
+  - Clinical supervision & competency sign-off
+  - Probation review milestones (4-week, 12-week, 6-month)
+- **Automatic progress tracking**: percentage complete per starter, calculated live from checked-off items
+- **At-risk detection**: starters whose progress lags well behind where they should be by their week-in-post are automatically flagged "At Risk"
+- **Dashboard stats**: total starters, in progress, completed, at risk, and average progress across the team
+- **Search & filter** by name, role, department, or status
+- **Notes** field per starter for anything that doesn't fit the checklist
+- **Export/Import** as JSON for backup or sharing
+- **Flexible Deployment**: standalone HTML (offline, no install) or Flask-based backend for shared/multi-user tracking
+
+## Getting Started
+
+### Option 1: Standalone HTML Version (Simplest)
+
+1. Open `tracker.html` in any modern web browser
+2. Click **+ Add New Starter** to begin tracking
+
+Data is saved automatically to your browser's local storage, so it persists between visits on the same device. Use **Export Data** to back up or hand off the tracker's data as a JSON file, and **Import Data** to load it elsewhere.
+
+### Option 2: Flask Backend Version (Shared/Multi-user)
+
+For teams that need a shared, server-side tracker:
+
+1. **Install Python Dependencies**
+   ```bash
+   pip install -r requirements.txt
+   ```
+
+2. **Run the Flask Server**
+   ```bash
+   python tracker_backend.py
+   ```
+
+3. **Access the API**
+   - API will be available at `http://localhost:5001`
+   - Data is persisted to `tracker_data.json` next to the script
+   - Build your own frontend against the API, or adapt `tracker.html` to call it instead of local storage
+
+## API Endpoints (Flask Version)
+
+- `GET /starters` - List all new starters, with computed progress and status
+- `GET /starters/summary` - Aggregate stats (totals, average progress, at-risk count)
+- `POST /starters` - Add a new starter (`name`, `role`, `department`, `startDate` required; `supervisor` optional)
+- `GET /starters/<id>` - Get a single starter
+- `PUT /starters/<id>` - Update a starter's details
+- `PATCH /starters/<id>/checklist/<item_id>` - Toggle a checklist item (`{"done": true}`)
+- `PUT /starters/<id>/notes` - Update notes
+- `DELETE /starters/<id>` - Remove a starter
+
+## How Progress & Risk Are Calculated
+
+- **Progress** is the percentage of checklist items marked done out of the total across all onboarding stages.
+- **Status** is one of:
+  - **Completed** - 100% of checklist items done
+  - **At Risk** - progress is significantly behind the expected pace for a standard 12-week probation period
+  - **In Progress** - everything else
+
+## Customization
+
+1. **Update the Checklist**: Edit `CHECKLIST_TEMPLATE` in `tracker.html` (and the matching copy in `tracker_backend.py` if using the backend) to match your organization's exact onboarding policy
+2. **Adjust the Probation Period**: Change `PROBATION_WEEKS` to match your organization's probation length
+3. **Modify Branding**: Update headers, colors, and styling in the HTML/CSS
+4. **Integrate with Systems**: Use the Flask API to connect the tracker to HR or rostering systems
+
+## Security & Privacy
+
+- The standalone version stores data only in your browser's local storage - nothing is sent to external servers
+- The Flask backend stores data in a local JSON file - secure this file and the server according to your organization's data protection policies
+- Avoid entering sensitive personal or health information beyond what's needed to track onboarding status
+
+---
+
+**Note**: This tracker is a general-purpose onboarding aid. Always follow your organization's official HR onboarding policy, probation procedures, and data protection requirements.
+

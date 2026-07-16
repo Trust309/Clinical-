@@ -1,0 +1,891 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NWLVH New Starter Progress Tracker</title>
+<style>
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+
+    body {
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        min-height: 100vh;
+        padding: 30px 20px;
+    }
+
+    .app {
+        max-width: 1100px;
+        margin: 0 auto;
+        background: white;
+        border-radius: 20px;
+        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+        overflow: hidden;
+    }
+
+    .app-header {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        padding: 25px 30px;
+    }
+
+    .app-header h1 {
+        font-size: 24px;
+        margin-bottom: 5px;
+    }
+
+    .app-header p {
+        font-size: 14px;
+        opacity: 0.9;
+    }
+
+    .stats-bar {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+        gap: 15px;
+        padding: 20px 30px;
+        background: #f5f5f5;
+        border-bottom: 1px solid #e0e0e0;
+    }
+
+    .stat-card {
+        background: white;
+        border-radius: 12px;
+        padding: 15px;
+        text-align: center;
+        border: 1px solid #e0e0e0;
+    }
+
+    .stat-card .value {
+        font-size: 26px;
+        font-weight: bold;
+        color: #667eea;
+    }
+
+    .stat-card.at-risk .value {
+        color: #e0574c;
+    }
+
+    .stat-card.completed .value {
+        color: #2eab6a;
+    }
+
+    .stat-card .label {
+        font-size: 12px;
+        color: #777;
+        margin-top: 4px;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+    }
+
+    .toolbar {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        padding: 20px 30px;
+        align-items: center;
+        border-bottom: 1px solid #e0e0e0;
+    }
+
+    .toolbar input[type="text"],
+    .toolbar select {
+        padding: 10px 14px;
+        border: 2px solid #e0e0e0;
+        border-radius: 20px;
+        font-size: 13px;
+        outline: none;
+    }
+
+    .toolbar input[type="text"]:focus,
+    .toolbar select:focus {
+        border-color: #667eea;
+    }
+
+    .toolbar input[type="text"] {
+        flex: 1;
+        min-width: 180px;
+    }
+
+    .btn {
+        padding: 10px 20px;
+        border: none;
+        border-radius: 20px;
+        cursor: pointer;
+        font-size: 13px;
+        font-weight: bold;
+        transition: transform 0.15s, box-shadow 0.15s;
+    }
+
+    .btn-primary {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+    }
+
+    .btn-primary:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+    }
+
+    .btn-secondary {
+        background: #f0f0f0;
+        color: #333;
+    }
+
+    .btn-secondary:hover {
+        background: #e5e5e5;
+    }
+
+    .btn-danger {
+        background: #fdeceb;
+        color: #c0392b;
+    }
+
+    .btn-danger:hover {
+        background: #fadbd8;
+    }
+
+    .starter-list {
+        padding: 20px 30px 30px;
+        max-height: 60vh;
+        overflow-y: auto;
+    }
+
+    .empty-state {
+        text-align: center;
+        color: #999;
+        padding: 60px 20px;
+    }
+
+    .starter-card {
+        border: 1px solid #e0e0e0;
+        border-radius: 14px;
+        margin-bottom: 16px;
+        overflow: hidden;
+    }
+
+    .starter-summary {
+        display: flex;
+        align-items: center;
+        gap: 15px;
+        padding: 16px 20px;
+        cursor: pointer;
+        background: white;
+    }
+
+    .starter-summary:hover {
+        background: #fafafa;
+    }
+
+    .avatar {
+        width: 44px;
+        height: 44px;
+        border-radius: 50%;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: bold;
+        flex-shrink: 0;
+    }
+
+    .starter-info {
+        flex: 1;
+        min-width: 0;
+    }
+
+    .starter-info .name-row {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        flex-wrap: wrap;
+    }
+
+    .starter-info h3 {
+        font-size: 16px;
+        color: #222;
+    }
+
+    .starter-info .meta {
+        font-size: 12px;
+        color: #888;
+        margin-top: 2px;
+    }
+
+    .badge {
+        font-size: 11px;
+        font-weight: bold;
+        padding: 3px 10px;
+        border-radius: 12px;
+        text-transform: uppercase;
+        letter-spacing: 0.3px;
+    }
+
+    .badge.in-progress {
+        background: #eaf0fe;
+        color: #4d6cd4;
+    }
+
+    .badge.completed {
+        background: #e5f7ed;
+        color: #2eab6a;
+    }
+
+    .badge.at-risk {
+        background: #fdeceb;
+        color: #e0574c;
+    }
+
+    .progress-wrap {
+        width: 160px;
+        flex-shrink: 0;
+    }
+
+    .progress-track {
+        background: #eee;
+        border-radius: 10px;
+        height: 10px;
+        overflow: hidden;
+    }
+
+    .progress-fill {
+        height: 100%;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        transition: width 0.3s ease;
+    }
+
+    .progress-fill.completed {
+        background: linear-gradient(135deg, #34c980 0%, #2eab6a 100%);
+    }
+
+    .progress-fill.at-risk {
+        background: linear-gradient(135deg, #ef8177 0%, #e0574c 100%);
+    }
+
+    .progress-label {
+        font-size: 11px;
+        color: #888;
+        text-align: right;
+        margin-top: 4px;
+    }
+
+    .card-actions {
+        display: flex;
+        gap: 8px;
+        flex-shrink: 0;
+    }
+
+    .icon-btn {
+        border: none;
+        background: #f0f0f0;
+        border-radius: 8px;
+        padding: 6px 10px;
+        cursor: pointer;
+        font-size: 12px;
+    }
+
+    .icon-btn:hover {
+        background: #e5e5e5;
+    }
+
+    .starter-detail {
+        display: none;
+        border-top: 1px solid #e0e0e0;
+        padding: 15px 20px 20px;
+        background: #fafafa;
+    }
+
+    .starter-detail.open {
+        display: block;
+    }
+
+    .stage {
+        margin-bottom: 14px;
+    }
+
+    .stage-title {
+        font-size: 13px;
+        font-weight: bold;
+        color: #555;
+        margin-bottom: 6px;
+        display: flex;
+        justify-content: space-between;
+    }
+
+    .stage-title .stage-count {
+        color: #999;
+        font-weight: normal;
+    }
+
+    .checklist-item {
+        display: flex;
+        align-items: flex-start;
+        gap: 8px;
+        padding: 5px 0;
+        font-size: 13px;
+        color: #333;
+    }
+
+    .checklist-item input[type="checkbox"] {
+        margin-top: 3px;
+        cursor: pointer;
+        width: 16px;
+        height: 16px;
+        accent-color: #667eea;
+    }
+
+    .checklist-item label {
+        cursor: pointer;
+        flex: 1;
+    }
+
+    .checklist-item .done-date {
+        font-size: 11px;
+        color: #aaa;
+        margin-left: 6px;
+    }
+
+    .checklist-item.checked label {
+        color: #999;
+        text-decoration: line-through;
+    }
+
+    .notes-box {
+        margin-top: 10px;
+    }
+
+    .notes-box textarea {
+        width: 100%;
+        min-height: 60px;
+        border: 2px solid #e0e0e0;
+        border-radius: 10px;
+        padding: 10px;
+        font-family: inherit;
+        font-size: 13px;
+        resize: vertical;
+        outline: none;
+    }
+
+    .notes-box textarea:focus {
+        border-color: #667eea;
+    }
+
+    .notes-box label {
+        font-size: 12px;
+        color: #777;
+        display: block;
+        margin-bottom: 4px;
+    }
+
+    /* Modal */
+    .modal-overlay {
+        display: none;
+        position: fixed;
+        inset: 0;
+        background: rgba(0, 0, 0, 0.5);
+        align-items: center;
+        justify-content: center;
+        z-index: 100;
+        padding: 20px;
+    }
+
+    .modal-overlay.open {
+        display: flex;
+    }
+
+    .modal {
+        background: white;
+        border-radius: 16px;
+        padding: 25px;
+        width: 100%;
+        max-width: 420px;
+        max-height: 90vh;
+        overflow-y: auto;
+    }
+
+    .modal h2 {
+        font-size: 18px;
+        margin-bottom: 18px;
+        color: #333;
+    }
+
+    .form-group {
+        margin-bottom: 14px;
+    }
+
+    .form-group label {
+        display: block;
+        font-size: 12px;
+        color: #666;
+        margin-bottom: 5px;
+        font-weight: bold;
+    }
+
+    .form-group input,
+    .form-group select {
+        width: 100%;
+        padding: 10px 12px;
+        border: 2px solid #e0e0e0;
+        border-radius: 10px;
+        font-size: 13px;
+        outline: none;
+    }
+
+    .form-group input:focus,
+    .form-group select:focus {
+        border-color: #667eea;
+    }
+
+    .modal-actions {
+        display: flex;
+        justify-content: flex-end;
+        gap: 10px;
+        margin-top: 20px;
+    }
+
+    .footer-actions {
+        display: flex;
+        gap: 10px;
+        padding: 15px 30px;
+        border-top: 1px solid #e0e0e0;
+        background: #f5f5f5;
+        flex-wrap: wrap;
+    }
+
+    #importFileInput {
+        display: none;
+    }
+</style>
+</head>
+<body>
+<div class="app">
+    <div class="app-header">
+        <h1>NWLVH New Starter Progress Tracker</h1>
+        <p>Monitor onboarding progress for every new starter, from pre-employment checks through to end of probation.</p>
+    </div>
+
+    <div class="stats-bar" id="statsBar"></div>
+
+    <div class="toolbar">
+        <input type="text" id="searchInput" placeholder="Search by name, role, or department...">
+        <select id="statusFilter">
+            <option value="all">All statuses</option>
+            <option value="in-progress">In Progress</option>
+            <option value="completed">Completed</option>
+            <option value="at-risk">At Risk</option>
+        </select>
+        <button class="btn btn-primary" onclick="openAddModal()">+ Add New Starter</button>
+    </div>
+
+    <div class="starter-list" id="starterList"></div>
+
+    <div class="footer-actions">
+        <button class="btn btn-secondary" onclick="exportData()">Export Data (JSON)</button>
+        <button class="btn btn-secondary" onclick="document.getElementById('importFileInput').click()">Import Data</button>
+        <input type="file" id="importFileInput" accept="application/json" onchange="importData(event)">
+    </div>
+</div>
+
+<div class="modal-overlay" id="modalOverlay">
+    <div class="modal">
+        <h2 id="modalTitle">Add New Starter</h2>
+        <form id="starterForm" onsubmit="saveStarter(event)">
+            <input type="hidden" id="starterId">
+            <div class="form-group">
+                <label>Full Name</label>
+                <input type="text" id="fieldName" required>
+            </div>
+            <div class="form-group">
+                <label>Role / Job Title</label>
+                <input type="text" id="fieldRole" required>
+            </div>
+            <div class="form-group">
+                <label>Department / Ward</label>
+                <input type="text" id="fieldDepartment" required>
+            </div>
+            <div class="form-group">
+                <label>Start Date</label>
+                <input type="date" id="fieldStartDate" required>
+            </div>
+            <div class="form-group">
+                <label>Clinical Supervisor / Buddy</label>
+                <input type="text" id="fieldSupervisor">
+            </div>
+            <div class="modal-actions">
+                <button type="button" class="btn btn-secondary" onclick="closeModal()">Cancel</button>
+                <button type="submit" class="btn btn-primary">Save</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script>
+// ---------- Onboarding checklist template ----------
+// Customize this to match your organization's exact onboarding policy.
+const CHECKLIST_TEMPLATE = [
+    {
+        stage: 'Pre-Employment Checks',
+        items: [
+            'Offer accepted & start date confirmed',
+            'References received and verified',
+            'DBS / background check cleared',
+            'Occupational health clearance received',
+            'Right to work verified',
+            'Professional registration verified (NMC / HCPC / GMC, if applicable)'
+        ]
+    },
+    {
+        stage: 'IT & Systems Access',
+        items: [
+            'IT account & email created',
+            'Clinical / EPR system access granted',
+            'ID badge issued',
+            'Building & door access configured',
+            'Equipment issued (laptop, phone, uniform)'
+        ]
+    },
+    {
+        stage: 'Day 1 Induction',
+        items: [
+            'Welcome pack provided',
+            'Site tour completed',
+            'Introduced to team and key contacts',
+            'Fire safety & emergency procedures briefing',
+            'Uniform / PPE issued'
+        ]
+    },
+    {
+        stage: 'Mandatory Training',
+        items: [
+            'Fire safety training',
+            'Safeguarding adults training',
+            'Safeguarding children training',
+            'Infection prevention & control training',
+            'Moving and handling training',
+            'Information governance & data security training',
+            'Basic life support (BLS) / resuscitation training',
+            'Equality, diversity & inclusion training'
+        ]
+    },
+    {
+        stage: 'Local Induction & Orientation',
+        items: [
+            'Department policies and procedures reviewed',
+            'Health & safety orientation (local risks)',
+            'Rota and shift pattern explained',
+            'Shadowing shifts completed',
+            'Key departmental contacts introduced'
+        ]
+    },
+    {
+        stage: 'Clinical Supervision & Competency',
+        items: [
+            'Clinical supervisor / mentor assigned',
+            'First clinical supervision session held',
+            'Preceptorship programme enrolled (if newly qualified)',
+            'Core competency assessments completed',
+            'Sign-off of competency framework'
+        ]
+    },
+    {
+        stage: 'Probation Review Milestones',
+        items: [
+            '4-week check-in completed',
+            '12-week probation review completed',
+            '6-month review completed (if applicable)',
+            'Probation confirmed / passed'
+        ]
+    }
+];
+
+const STORAGE_KEY = 'nwlvh_new_starter_tracker_v1';
+const PROBATION_WEEKS = 12;
+
+let starters = [];
+let expandedId = null;
+
+function buildChecklist() {
+    return CHECKLIST_TEMPLATE.map(stage => ({
+        stage: stage.stage,
+        items: stage.items.map(label => ({
+            id: 'i_' + Math.random().toString(36).slice(2, 10),
+            label,
+            done: false,
+            doneDate: null
+        }))
+    }));
+}
+
+function loadData() {
+    const raw = localStorage.getItem(STORAGE_KEY);
+    starters = raw ? JSON.parse(raw) : [];
+}
+
+function saveData() {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(starters));
+    render();
+}
+
+function computeProgress(starter) {
+    let total = 0, done = 0;
+    starter.checklist.forEach(stage => stage.items.forEach(item => {
+        total++;
+        if (item.done) done++;
+    }));
+    return total === 0 ? 0 : Math.round((done / total) * 100);
+}
+
+function computeStatus(starter) {
+    const progress = computeProgress(starter);
+    if (progress >= 100) return 'completed';
+
+    const start = new Date(starter.startDate);
+    const now = new Date();
+    const weeksSinceStart = (now - start) / (1000 * 60 * 60 * 24 * 7);
+    const expected = Math.min(100, Math.max(0, (weeksSinceStart / PROBATION_WEEKS) * 100));
+
+    if (weeksSinceStart > 0 && progress < expected - 20) return 'at-risk';
+    return 'in-progress';
+}
+
+function statusLabel(status) {
+    return { 'in-progress': 'In Progress', 'completed': 'Completed', 'at-risk': 'At Risk' }[status];
+}
+
+function initials(name) {
+    return name.trim().split(/\s+/).slice(0, 2).map(p => p[0].toUpperCase()).join('');
+}
+
+function renderStats() {
+    const total = starters.length;
+    const completed = starters.filter(s => computeStatus(s) === 'completed').length;
+    const atRisk = starters.filter(s => computeStatus(s) === 'at-risk').length;
+    const inProgress = total - completed - atRisk;
+    const avgProgress = total === 0 ? 0 : Math.round(starters.reduce((sum, s) => sum + computeProgress(s), 0) / total);
+
+    document.getElementById('statsBar').innerHTML = `
+        <div class="stat-card"><div class="value">${total}</div><div class="label">Total Starters</div></div>
+        <div class="stat-card"><div class="value">${inProgress}</div><div class="label">In Progress</div></div>
+        <div class="stat-card completed"><div class="value">${completed}</div><div class="label">Completed</div></div>
+        <div class="stat-card at-risk"><div class="value">${atRisk}</div><div class="label">At Risk</div></div>
+        <div class="stat-card"><div class="value">${avgProgress}%</div><div class="label">Avg Progress</div></div>
+    `;
+}
+
+function render() {
+    renderStats();
+
+    const search = document.getElementById('searchInput').value.trim().toLowerCase();
+    const statusFilter = document.getElementById('statusFilter').value;
+
+    const list = document.getElementById('starterList');
+
+    let filtered = starters.filter(s => {
+        const matchesSearch = !search ||
+            s.name.toLowerCase().includes(search) ||
+            s.role.toLowerCase().includes(search) ||
+            s.department.toLowerCase().includes(search);
+        const status = computeStatus(s);
+        const matchesStatus = statusFilter === 'all' || statusFilter === status;
+        return matchesSearch && matchesStatus;
+    });
+
+    if (filtered.length === 0) {
+        list.innerHTML = `<div class="empty-state">No new starters found. Click "+ Add New Starter" to begin tracking onboarding progress.</div>`;
+        return;
+    }
+
+    list.innerHTML = filtered.map(s => {
+        const progress = computeProgress(s);
+        const status = computeStatus(s);
+        const isOpen = expandedId === s.id;
+
+        const stagesHtml = s.checklist.map(stage => {
+            const stageDone = stage.items.filter(i => i.done).length;
+            const itemsHtml = stage.items.map(item => `
+                <div class="checklist-item ${item.done ? 'checked' : ''}">
+                    <input type="checkbox" id="${item.id}" ${item.done ? 'checked' : ''}
+                        onchange="toggleItem('${s.id}', '${item.id}', this.checked)">
+                    <label for="${item.id}">${item.label}</label>
+                    ${item.done && item.doneDate ? `<span class="done-date">✓ ${item.doneDate}</span>` : ''}
+                </div>
+            `).join('');
+            return `
+                <div class="stage">
+                    <div class="stage-title"><span>${stage.stage}</span><span class="stage-count">${stageDone}/${stage.items.length}</span></div>
+                    ${itemsHtml}
+                </div>
+            `;
+        }).join('');
+
+        return `
+            <div class="starter-card">
+                <div class="starter-summary" onclick="toggleExpand('${s.id}')">
+                    <div class="avatar">${initials(s.name)}</div>
+                    <div class="starter-info">
+                        <div class="name-row">
+                            <h3>${escapeHtml(s.name)}</h3>
+                            <span class="badge ${status}">${statusLabel(status)}</span>
+                        </div>
+                        <div class="meta">${escapeHtml(s.role)} &middot; ${escapeHtml(s.department)} &middot; Started ${formatDate(s.startDate)}${s.supervisor ? ' &middot; Supervisor: ' + escapeHtml(s.supervisor) : ''}</div>
+                    </div>
+                    <div class="progress-wrap">
+                        <div class="progress-track"><div class="progress-fill ${status === 'completed' ? 'completed' : ''} ${status === 'at-risk' ? 'at-risk' : ''}" style="width:${progress}%"></div></div>
+                        <div class="progress-label">${progress}% complete</div>
+                    </div>
+                    <div class="card-actions">
+                        <button class="icon-btn" onclick="event.stopPropagation(); openEditModal('${s.id}')">Edit</button>
+                        <button class="icon-btn" onclick="event.stopPropagation(); deleteStarter('${s.id}')">Delete</button>
+                    </div>
+                </div>
+                <div class="starter-detail ${isOpen ? 'open' : ''}">
+                    ${stagesHtml}
+                    <div class="notes-box">
+                        <label>Notes</label>
+                        <textarea placeholder="Add any notes about this new starter's onboarding..."
+                            onchange="updateNotes('${s.id}', this.value)">${escapeHtml(s.notes || '')}</textarea>
+                    </div>
+                </div>
+            </div>
+        `;
+    }).join('');
+}
+
+function escapeHtml(str) {
+    const div = document.createElement('div');
+    div.textContent = str || '';
+    return div.innerHTML;
+}
+
+function formatDate(dateStr) {
+    if (!dateStr) return '';
+    const d = new Date(dateStr);
+    return d.toLocaleDateString(undefined, { year: 'numeric', month: 'short', day: 'numeric' });
+}
+
+function toggleExpand(id) {
+    expandedId = expandedId === id ? null : id;
+    render();
+}
+
+function toggleItem(starterId, itemId, checked) {
+    const starter = starters.find(s => s.id === starterId);
+    if (!starter) return;
+    starter.checklist.forEach(stage => {
+        stage.items.forEach(item => {
+            if (item.id === itemId) {
+                item.done = checked;
+                item.doneDate = checked ? new Date().toLocaleDateString(undefined, { year: 'numeric', month: 'short', day: 'numeric' }) : null;
+            }
+        });
+    });
+    saveData();
+}
+
+function updateNotes(starterId, value) {
+    const starter = starters.find(s => s.id === starterId);
+    if (!starter) return;
+    starter.notes = value;
+    saveData();
+}
+
+function deleteStarter(id) {
+    const starter = starters.find(s => s.id === id);
+    if (!starter) return;
+    if (!confirm(`Remove ${starter.name} from the tracker? This cannot be undone.`)) return;
+    starters = starters.filter(s => s.id !== id);
+    saveData();
+}
+
+function openAddModal() {
+    document.getElementById('modalTitle').textContent = 'Add New Starter';
+    document.getElementById('starterForm').reset();
+    document.getElementById('starterId').value = '';
+    document.getElementById('modalOverlay').classList.add('open');
+}
+
+function openEditModal(id) {
+    const s = starters.find(x => x.id === id);
+    if (!s) return;
+    document.getElementById('modalTitle').textContent = 'Edit New Starter';
+    document.getElementById('starterId').value = s.id;
+    document.getElementById('fieldName').value = s.name;
+    document.getElementById('fieldRole').value = s.role;
+    document.getElementById('fieldDepartment').value = s.department;
+    document.getElementById('fieldStartDate').value = s.startDate;
+    document.getElementById('fieldSupervisor').value = s.supervisor || '';
+    document.getElementById('modalOverlay').classList.add('open');
+}
+
+function closeModal() {
+    document.getElementById('modalOverlay').classList.remove('open');
+}
+
+function saveStarter(event) {
+    event.preventDefault();
+    const id = document.getElementById('starterId').value;
+    const name = document.getElementById('fieldName').value.trim();
+    const role = document.getElementById('fieldRole').value.trim();
+    const department = document.getElementById('fieldDepartment').value.trim();
+    const startDate = document.getElementById('fieldStartDate').value;
+    const supervisor = document.getElementById('fieldSupervisor').value.trim();
+
+    if (id) {
+        const s = starters.find(x => x.id === id);
+        Object.assign(s, { name, role, department, startDate, supervisor });
+    } else {
+        starters.push({
+            id: 's_' + Math.random().toString(36).slice(2, 10),
+            name, role, department, startDate, supervisor,
+            notes: '',
+            checklist: buildChecklist()
+        });
+    }
+
+    closeModal();
+    saveData();
+}
+
+function exportData() {
+    const blob = new Blob([JSON.stringify(starters, null, 2)], { type: 'application/json' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `nwlvh-new-starter-tracker-${new Date().toISOString().slice(0, 10)}.json`;
+    a.click();
+    URL.revokeObjectURL(url);
+}
+
+function importData(event) {
+    const file = event.target.files[0];
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = e => {
+        try {
+            const data = JSON.parse(e.target.result);
+            if (!Array.isArray(data)) throw new Error('Invalid file format');
+            starters = data;
+            saveData();
+        } catch (err) {
+            alert('Could not import file: ' + err.message);
+        }
+    };
+    reader.readAsText(file);
+    event.target.value = '';
+}
+
+document.getElementById('searchInput').addEventListener('input', render);
+document.getElementById('statusFilter').addEventListener('change', render);
+document.getElementById('modalOverlay').addEventListener('click', e => {
+    if (e.target.id === 'modalOverlay') closeModal();
+});
+
+loadData();
+render();
+</script>
+</body>
+</html>
